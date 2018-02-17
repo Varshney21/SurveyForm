@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<style>
+			form{
+				font-family: Comic Sans MS;
+				font-size: 17px;
+			}
+			input[type=text]{
+				width: 30%;
+				border-bottom-width: 2px;
+				border-bottom-color: lightblue;
+				border-top-width: 0px;
+				border-left-width: 0px;
+				border-right-width: 0px;
+	    		#border-radius: 4px;
+	    		padding: 2px;
+	    		font-size: 17px;
+	    		font-family: Comic Sans MS;
+			}
+			textarea{
+				width: 50%;
+				height: 50px;
+				font-family: Comic Sans MS;
+				font-size: 15px;
+				resize: none;
+			}
+			input[type=button]{
+				border-radius: 4px;
+				font-size: 15px;
+				font-family: Comic Sans MS;
+				background-color: #fff;
+				border: 2px solid blue;
+			}
+			h2{
+				font-family: Comic Sans MS;
+			}
+		</style>
+	</head>
+	<body>
+		<h2>Survey Form</h2>
+		<form>
+			What is your age group?<br>
+			<input type="radio" name="Age" value="<=25 yrs">&lt = 25 yrs </input><br>
+			<input type="radio" name="Age" value="26-35 yrs">26 - 35 yrs </input><br>
+			<input type="radio" name="Age" value="36-50yrs">36 - 50 yrs </input><br>
+			<input type="radio" name="Age" value=">50 yrs" >&gt 50 yrs </input><br>
+			What is your gender?<br>
+			<input type="radio" value="male"   name="gender">Male </input><br>
+			<input type="radio" value="female" name="gender">Female </input><br>
+			<input type="radio" value="prefered not to say" name="gender">Prefer not to say </input><br>
+			How would you like your health life-style change care to be delivered?<br>
+			<input type="radio" name="A3" value="Mobile App">Mobile App </input><br>
+			<input type="radio" name="A3" value="Personal instructor over video call">Personal instructor over video call </input><br>
+			<input type="radio" name="A3" value="Personal instructor in person">Personal instructor in person </input><br>
+			<input type="radio" name="A3" value="virtual group sessions">virtual group sessions </input><br>
+			<input type="radio" name="A3" value="in-person group sessions">in-person group sessions </input><br>
+			<input type="radio" name="A3" value="Other">Other:<input type="text" id="OT"></input> </input><br>
+			Your Name:
+			<input type="text" id="N1"><br>
+			Any thing else you want to specify<br>
+			<textarea id="ots"></textarea><br>
+			How comfortable are you with sharing your fitness information(in social media or focus groups)<br>
+			<input type="radio" name="A4" value="Not comfortable at all">Not comfortable at all </input><br>
+			<input type="radio" name="A4" value="Open to sharing some of it">Open to sharing some of it </input><br>
+			<input type="radio" name="A4" value="Totally comfortable">Totally comfortable </input><br><br>
+			<input type="button" value="SUBMIT" id="Submit">
+		</form>
+		<script>
+			document.getElementById("Submit").onclick = function(){
+				//console.log("loda");
+				var Age = document.querySelector('input[name="Age"]:checked').value;
+				var Gender = document.querySelector('input[name="gender"]:checked').value;
+				var V_A3 = document.querySelector('input[name="A3"]:checked').value;
+				if(V_A3 == "Other"){
+					V_A3 = document.getElementById("OT").value;
+				}
+				var name = document.getElementById("N1").value;
+				var mess = document.getElementById("ots").value;
+				var V_A4 = document.querySelector('input[name="A4"]:checked').value;
+				console.log(Age,Gender,V_A3,V_A4,name,mess);
+				var data = JSON.stringify({ 'Age': Age, 'Gender':Gender, 'V_A3':V_A3, 'name':name, 'mess':mess, 'V_A4':V_A4 });
+				//console.log(data);
+
+				var xhttp = new XMLHttpRequest();
+  				xhttp.onreadystatechange = function() {
+    				if (this.readyState == 4 && this.status == 200) {
+    					alert("Form Submited Successfully :)");
+    				}
+  				};
+  				xhttp.open('POST', 'http://localhost:3000/formsubmit', true);					
+				xhttp.setRequestHeader("Content-Type", "application/json");
+				xhttp.send(data);
+			};
+		</script>
+	</body>
+</html>
