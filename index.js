@@ -1,10 +1,19 @@
 var bodyParser = require('body-parser');
+var url = require('url');
+var path = require('path');
+var fs = require('fs');
 var nodemailer = require('nodemailer');
 var express = require('express');
 var app = express();
 
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.use(bodyParser.json()); // support json encoded bodies
+
+
+app.get('/',function(req,res){
+  res.sendFile(path.join(__dirname+'/form.html'));
+  //__dirname : It will resolve to your project folder.
+});
 
 app.post('/formsubmit',function(req,res){
 	var F_Age = req.body.Age;
